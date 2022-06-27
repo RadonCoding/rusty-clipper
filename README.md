@@ -1,4 +1,4 @@
-# Rusty-Clipper
+# Rusty Clipper
 Crypto address clipper written in Rust
 
 ### Educational purposes only
