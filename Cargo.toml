@@ -17,3 +17,4 @@ winapi = { version = "0.3.9", features = [ "winuser", "processthreadsapi", "libl
 regex = "1.5.6"
 winreg = "0.10"
 wmi = "0.9.3"
+sysinfo = "0.24.5"

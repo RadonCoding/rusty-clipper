@@ -1,8 +1,9 @@
 #![windows_subsystem = "windows"]
 mod constants;
-use std::{collections::HashMap, error::Error, ffi::CStr, process};
+use std::{collections::HashMap, error::Error, ffi::CStr, path::Path, process};
 
 use regex::Regex;
+use sysinfo::{ProcessExt, System, SystemExt};
 use winapi::{
     ctypes::c_void,
     shared::{
