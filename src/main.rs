@@ -1,3 +1,4 @@
+#![windows_subsystem = "windows"]
 mod constants;
 use std::{error::Error, ffi::CStr};
 
