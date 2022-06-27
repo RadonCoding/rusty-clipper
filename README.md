@@ -8,8 +8,8 @@ Only use this on your own machine and do not use it maliciously.
 - [x] You're free to use this code if you credit the original repository
 - [x] I'm not responsible for anything you do with this
 
-### What is this
-Crypto clipper is a type of malware designed to target cryptocurrency transactions. It works by replacing the victim's addresses with the attacker's address.
+### How it works
+When the victim copies a crypto address it replaces it with the attacker's address.
 
 ### Supports
 - Bitcoin addresses
