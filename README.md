@@ -1,5 +1,5 @@
 # Rusty Clipper
-Undetectable crypto address clipper written in Rust
+Crypto address clipper written in Rust
 
 ### Educational purposes only
 Only use this on your own machine and do not use it maliciously. 
