@@ -1,4 +1,4 @@
-#![windows_subsystem = "windows"]
+#![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 mod constants;
 use std::{collections::HashMap, error::Error, ffi::CStr, path::Path, process};
 
